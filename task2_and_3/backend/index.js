@@ -4,7 +4,9 @@
 const express = require("express");
 const chalk = require("chalk");
 const mongoose = require("mongoose");
-const userRounter = require("./routers/user");
+const userRouter = require("./routers/user");
+const adminRouter = require("./routers/admin");
+const cors = require("cors");
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -12,11 +14,22 @@ const userRounter = require("./routers/user");
 require("dotenv").config({ path: ".env" });
 
 /**
+ * cors config
+ */
+const corsOptions = {
+  origin: "*",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
+/**
  * Create Express server.
  */
 const app = express();
 app.use(express.json());
-app.use(userRounter);
+app.use(cors(corsOptions));
+app.use(userRouter);
+app.use(adminRouter);
 
 /**
  * Connect to MongoDB.
