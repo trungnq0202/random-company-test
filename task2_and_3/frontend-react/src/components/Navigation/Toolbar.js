@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { PropTypes } from "prop-types";
 import { NavLink } from "react-router-dom";
 import { PersonFill, CaretDown, InfoCircle } from "react-bootstrap-icons";
 import classes from "./Toolbar.module.css";
@@ -90,9 +89,5 @@ class Toolbar extends Component {
   }
 }
 
-// Toolbar.PropTypes = {
-//     title: PropTypes.string,
-//     // logoutBtnClickHandler: Pro
-// }
 
 export default Toolbar;
