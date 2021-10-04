@@ -44,6 +44,9 @@
 
 ![Task2 admin login](./demo/task2/admin_login.png)
 
+- These are currently all users existing in the database, shown with the purpose of the marker being comfortable with testing search-by-name feature.
+
+![Task2 all users](./demo/task2/currently_all_users.png)
 
 ## 2. Test locally
 ### Back-end Nodejs, Express setup
