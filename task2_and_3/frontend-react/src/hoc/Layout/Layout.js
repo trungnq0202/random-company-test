@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { logout } from '../../pages/login/login.action'
 import Aux from '../Auxiliary/Auxiliary';
 import Toolbar from '../../components/Navigation/Toolbar';
-import classes from './Layout.css';
+import './Layout.css';
 
 class Layout extends Component {
   render() {
@@ -13,8 +13,8 @@ class Layout extends Component {
           title={this.props.title}
           username={this.props.username}
           logoutBtnHandler={this.props.onLogout} />
-        <main className={classes.Content}>
-          {this.props.children}
+        <main className="Content">
+          {this.props.children}          
         </main>
       </Aux>
     )
