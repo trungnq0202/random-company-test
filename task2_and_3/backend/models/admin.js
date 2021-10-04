@@ -14,7 +14,7 @@ const adminSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
 
   tokens: [
@@ -24,7 +24,7 @@ const adminSchema = new mongoose.Schema({
         required: true,
       },
     },
-  ]
+  ],
 });
 
 adminSchema.methods.toJSON = function () {
@@ -38,34 +38,33 @@ adminSchema.methods.toJSON = function () {
 };
 
 adminSchema.methods.generateAuthToken = async function (expiresInSeconds) {
-    const admin = this
-    const token = jwt.sign(
-        { _id: admin._id.toString() }, 
-        'thisisarandomcompanytestproject', 
-        {expiresIn: expiresInSeconds}
-    )
-    admin.tokens = admin.tokens.concat({ token })
-    await admin.save()
+  const admin = this;
+  const token = jwt.sign(
+    { _id: admin._id.toString() },
+    process.env.JWT_SECRET,
+    { expiresIn: expiresInSeconds }
+  );
+  admin.tokens = admin.tokens.concat({ token });
+  await admin.save();
 
-    return token
-}
+  return token;
+};
 
 adminSchema.statics.findByCredentials = async (username, password) => {
-    const admin = await Admin.findOne({ username })
+  const admin = await Admin.findOne({ username });
 
-    if (!admin) {
-        throw new Error('Unable to login')
-    }
+  if (!admin) {
+    throw new Error("Unable to login");
+  }
 
-    const isMatch = await bcrypt.compare(password, admin.password)
+  const isMatch = await bcrypt.compare(password, admin.password);
 
-    if (!isMatch) {
-        throw new Error('Unable to login')
-    }
+  if (!isMatch) {
+    throw new Error("Unable to login");
+  }
 
-    return admin
-}
-
+  return admin;
+};
 
 // Hash the plain text password before saving
 adminSchema.pre("save", async function (next) {
@@ -77,8 +76,6 @@ adminSchema.pre("save", async function (next) {
 
   next();
 });
-
-
 
 const Admin = mongoose.model("Admin", adminSchema);
 
