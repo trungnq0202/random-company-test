@@ -14,6 +14,10 @@ router.post("/api/users/add", auth, async (req, res) => {
   }
 });
 
+router.get("/api/users/get", async(req, res) => {
+  res.send("Hello world")
+})
+
 router.get("/api/users/get-all-by-name", auth, async (req, res) => {
   try {
     const pattern = ".*" + req.query.name + ".*";
