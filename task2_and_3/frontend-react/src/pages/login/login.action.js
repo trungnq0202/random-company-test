@@ -1,15 +1,24 @@
-import fetch from "isomorphic-fetch";
-import { push, replace } from "connected-react-router";
+import { replace } from "connected-react-router";
 import { actions } from "./login.constant";
+import axios from "../../axios-request";
 
 const { LOGIN_START, LOGIN_SUCCESS, LOGIN_FAIL, AUTH_LOGOUT } = actions;
 
 export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("expirationDate");
-  localStorage.removeItem("account");
-  return {
-    type: AUTH_LOGOUT,
+  const token = localStorage.getItem("token");
+  return async (dispatch) => {
+    await axios.post("/admin/logout", localStorage.getItem("account"), {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    localStorage.removeItem("token");
+    localStorage.removeItem("expirationDate");
+    localStorage.removeItem("account");
+
+    dispatch({ type: AUTH_LOGOUT });
   };
 };
 
@@ -48,33 +57,37 @@ export const tryAutoLoggingIn = () => {
 };
 
 export const login = (dispatch) => {
+  const token = localStorage.getItem("token");
   return async (username, password) => {
     dispatch({ type: LOGIN_START });
-
-    const response = await fetch("http://localhost:8080/api/admin/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    const result = await response.json();
-    if (result.error) {
-      dispatch({ type: LOGIN_FAIL });
-    } else {
-      const expirationDate = new Date(
-        new Date().getTime() + result.expiresIn * 1000
-      );
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("expirationDate", expirationDate);
-      localStorage.setItem("account", JSON.stringify(result.admin));
-      const payload = {
-        account: result.admin,
-        token: result.token,
-      };
-      dispatch({ type: LOGIN_SUCCESS, payload: payload });
-      dispatch(checkAuthTimeout(result.expiresIn));
-      dispatch(replace("/user-management"));
-    }
+    axios
+      .post(
+        "/admin/auth",
+        { username, password },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((result) => {
+        const expirationDate = new Date(
+          new Date().getTime() + result.data.expiresIn * 1000
+        );
+        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("expirationDate", expirationDate);
+        localStorage.setItem("account", JSON.stringify(result.data.account));
+        const payload = {
+          account: result.data.account,
+          token: result.data.token,
+        };
+        dispatch({ type: LOGIN_SUCCESS, payload: payload });
+        dispatch(checkAuthTimeout(result.data.expiresIn));
+        dispatch(replace("/user-management"));
+      })
+      .catch((error) => {
+        dispatch({ type: LOGIN_FAIL });
+      });
   };
 };
