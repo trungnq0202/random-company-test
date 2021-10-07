@@ -78,8 +78,41 @@ npm run start
 <br><br>
 
 # Task 3
-- Unable to implement in restricted time.
+## Please test on deployed application
 
+- Open page ``` Family tree rendering ``` on navigation bar.
+![Task3 family tree rendering page](./demo/task3/family_tree_rendering_page.png)
+
+- Upload JSON file which represents family tree structure as follows:
+```
+{
+    name: "parent",
+    children: [
+        {
+            name: "children1"
+            children: [... 'grandchildren']
+        },
+        {
+            name: "children2"
+            children: [... 'grandchildren']
+        }
+    ]
+}
+```
+- I suggest using the ``` family.json ```  file in the project for convenience.
+
+- After being uploaded, the tree is rendered as shown, for example:
+![Task3 family tree rendering](./demo/task3/family_tree_rendering.png)
+
+- Can add/remove node dynamically using 2 buttons on each node: "Add" and "remove"
+
+- Have validations for 2 rules: 
+    - Each node name must be unique.
+    ![Task3 family tree rendering,  unique name](./demo/task3/unique.png)
+    - When creating new node, the name entered must be non-empty and unique.
+    ![Task3 family tree rendering, non-empty name](./demo/task3/not_empty.png)
+    - Also validate the same for uploaded JSON file
+    ![Task3 family tree rendering, validate uploaded json file name](./demo/task3/validate_json_file.png)
 
 Prerequisites
 -------------
