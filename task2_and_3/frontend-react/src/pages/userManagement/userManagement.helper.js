@@ -32,12 +32,5 @@ export const combineOldAndUpdatedUsers = (oldUsers, newUsers) => {
     }
   }
 
-  console.log("concac");
-  console.log(oldUsers);
-  console.log("cailoz");
-  console.log(newUsers);
-  console.log("baby");
-  console.log(finalUsers);
-
   return finalUsers;
 };
