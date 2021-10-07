@@ -1,0 +1,42 @@
+{
+  "name": "hien.ngo",
+  "children": [
+    {
+      "name": "trung",
+      "children": [
+        {
+          "name": "tung.nguyen",
+          "children": [
+            {
+              "name": "jason.ngo"
+            }
+          ]
+        },
+        {
+          "name": "van.nguyen",
+          "children": [
+            {
+              "name": "john.smith"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "linh.ngo",
+      "children": [
+        {
+          "name": "johnnnn"
+        },
+        {
+          "name": "Kevin Pham",
+          "children": [
+            {
+              "name": "Charles Bui"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
