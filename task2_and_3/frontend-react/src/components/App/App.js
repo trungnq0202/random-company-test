@@ -7,7 +7,9 @@ import { ConnectedRouter } from "connected-react-router";
 import Login from "../../pages/login/Login";
 import UserMangement from "../../pages/userManagement/UserManagement";
 import AuthenticatedRoute from "../../hoc/CustomRoute/AuthenticatedRoute";
+import FamilyTree from "../../pages/familyTree/FamilyTree"
 import NotFound from "../../pages/error/NotFound/NotFound";
+
 
 import "./App.css";
 
@@ -28,7 +30,11 @@ class App extends Component {
             component={UserMangement}
             auth={this.props.isAuthenticated}
           />
-
+          <AuthenticatedRoute
+            path="/family-tree"
+            component={FamilyTree}
+            auth={this.props.isAuthenticated}
+          />
           <Route path="/" exact component={Login} />
           <Route path="*" component={NotFound} />
       </Switch>
